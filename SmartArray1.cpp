@@ -6,11 +6,13 @@
 class smart_array
 {
 public:
+	smart_array(const smart_array&) = delete;
+	smart_array& operator = (const smart_array&) = delete;
 	smart_array(int size)
 	{
 		size_ = size;
-	}
-	int* arr = new int[size_]();
+		arr = new int[size_];
+	}	
 	void add_element(int num)
 	{
 		if (element < size_)
@@ -22,7 +24,7 @@ public:
 	}
 	int get_element(int index)
 	{
-		if (index >= size_)
+		if (index >= size_ || index < 0)
 		{
 			throw std::exception("Некорректно указан индекс массива.");
 		}
@@ -31,6 +33,7 @@ public:
 	~smart_array() { delete[] arr; }
 private:
 	int size_ = 0;
+	int* arr = nullptr;
 	int element = 0;
 };
 
@@ -44,7 +47,7 @@ int main()
 		arr.add_element(155);
 		arr.add_element(14);
 		arr.add_element(15);
-		std::cout << arr.get_element(0) << std::endl;
+		std::cout << arr.get_element(5) << std::endl;
 	}
 	catch (const std::exception& ex) {
 		std::cout << ex.what() << std::endl;
